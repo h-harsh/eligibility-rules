@@ -64,7 +64,7 @@
   right: 0;
   margin-top: 4px;
   max-height: 250px;
-  overflow-y: auto;
+  overflow-y: visible;
   background-color: white;
   border: 1px solid #e2e8f0;
   border-radius: 6px;
@@ -79,16 +79,15 @@
   padding: 8px 12px;
   cursor: pointer;
   transition: background-color 0.2s;
+  font-size: 12px;
 }
 
 .dropdown-item:hover {
   background-color: #f7fafc;
 }
 
-.dropdown-item.selected {
-  background-color: #ebf8ff;
-}
-
 .dropdown-item input[type="checkbox"] {
   margin: 0;
+  accent-color: #1a202c; 
+  border-radius: 4px; 
 }

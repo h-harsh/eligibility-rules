@@ -192,7 +192,7 @@
 .text-input {
   width: 100%;
   padding: 8px 12px;
-  border: 1px solid #e2e8f0;
+  border: 0.66px solid #8A8A8A;
   border-radius: 6px;
   font-size: 14px;
   line-height: 1.5;

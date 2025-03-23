@@ -75,10 +75,9 @@ const MultiSelect = memo(({
 
   // Memoize selected options display
   const selectedOptionsDisplay = useMemo(() => {
-    if (value.length === 0) return placeholder;
     if (showSearch && searchTerm) return searchTerm;
-    return `${value.length} selected`;
-  }, [value.length, placeholder, searchTerm, showSearch]);
+    return placeholder;
+  }, [placeholder, searchTerm, showSearch]);
 
   // Selection count display
   const selectionCount = useMemo(() => 
@@ -115,7 +114,7 @@ const MultiSelect = memo(({
               {filteredOptions.map(option => (
                 <div
                   key={option.id}
-                  className={`dropdown-item ${value.includes(option.id) ? 'selected' : ''}`}
+                  className="dropdown-item"
                   onClick={() => handleOptionSelect(option.id)}
                 >
                   <input
