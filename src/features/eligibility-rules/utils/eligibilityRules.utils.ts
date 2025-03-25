@@ -105,13 +105,18 @@ export const getAvailableOperators = (
     return baseOperators;
   }
 
-  // Check if there's already an inclusion rule in the same group
-  const hasGroupInclusion = hasInclusionRuleInGroup(rules, exclusiveGroup, currentRuleId);
-  
-  if (hasGroupInclusion) {
-    // If there's already an inclusion rule in the group,
-    // only return exclusion operators
-    return baseOperators.filter(op => isExclusionOperator(op));
+  // Find all rules in the same mutually exclusive group
+  const groupRules = rules.filter(rule => 
+    exclusiveGroup.includes(rule.type) && 
+    rule.id !== currentRuleId
+  );
+
+  // If there are any rules in the same group, lock to current operator
+  if (groupRules.length > 0) {
+    const currentRule = rules.find(r => r.id === currentRuleId);
+    if (currentRule) {
+      return [currentRule.operator];
+    }
   }
 
   return baseOperators;

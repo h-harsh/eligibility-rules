@@ -4,9 +4,7 @@ import {
   validateRules, 
   getOptionsForRuleType,
   operatorToOption,
-  findMutuallyExclusiveGroup,
-  isExclusionOperator,
-  hasInclusionRuleInGroup
+  findMutuallyExclusiveGroup
 } from '../utils/eligibilityRules.utils';
 import { OPERATOR_LABELS, AVAILABLE_OPERATORS } from '../data/eligibilityRules.data';
 
@@ -49,15 +47,15 @@ export const useEligibilityRules = () => {
       return baseOperators.map(operator => operatorToOption(operator, OPERATOR_LABELS));
     }
 
-    // Check if there's an inclusion rule in the same group
-    const hasGroupInclusion = hasInclusionRuleInGroup(otherRules, exclusiveGroup);
+    // Find all rules in the same mutually exclusive group
+    const groupRules = otherRules.filter(r => exclusiveGroup.includes(r.type));
 
-    // If there's already an inclusion rule in the group, only show exclusion operators
-    const availableOps = hasGroupInclusion
-      ? baseOperators.filter(op => isExclusionOperator(op))
-      : baseOperators;
+    // If there are any rules in the same group, lock to current operator
+    if (groupRules.length > 0) {
+      return [operatorToOption(rule.operator, OPERATOR_LABELS)];
+    }
 
-    return availableOps.map(operator => operatorToOption(operator, OPERATOR_LABELS));
+    return baseOperators.map(operator => operatorToOption(operator, OPERATOR_LABELS));
   }, []);
 
   /**
