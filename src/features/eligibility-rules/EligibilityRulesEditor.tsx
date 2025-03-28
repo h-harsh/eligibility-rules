@@ -12,6 +12,7 @@ const EligibilityRulesEditor = () => {
   const [currentEditingRule, setCurrentEditingRule] = useState<Rule | null>(null);
   const disabled = false;
   
+  
   // Memoize the total rules count to prevent unnecessary re-renders
   const totalRules = useMemo(() => rules.length, [rules]);
   
@@ -32,21 +33,6 @@ const EligibilityRulesEditor = () => {
 
   // Core handlers for rule modifications
   const handlers = useMemo(() => ({
-    onRuleChange: (index: number, updatedRule: Rule) => {
-      setRules(prevRules => {
-        const newRules = [...prevRules];
-        newRules[index] = updatedRule;
-        return sortRulesByPriority(newRules);
-      });
-    },
-    onRuleDelete: (index: number) => {
-      setCurrentEditingRule(null);
-      setRules(prevRules => sortRulesByPriority(prevRules.filter((_, i) => i !== index)));
-    },
-    onRuleDeleteById: (ruleId: string) => {
-      setCurrentEditingRule(null);
-      setRules(prevRules => sortRulesByPriority(prevRules.filter(r => r.id !== ruleId)));
-    },
     onTypeChange: (ruleId: string, newType: RuleType) => {
       setRules(prevRules => {
         // Prevent duplicate rule types
@@ -161,6 +147,7 @@ const EligibilityRulesEditor = () => {
     const defaultType = availableType.id as RuleType;
     const exclusiveGroup = findMutuallyExclusiveGroup(defaultType);
     let defaultOperator: Operator;
+    console.log('exclusiveGroup', exclusiveGroup);
 
     if (exclusiveGroup && hasInclusionRuleInGroup(rules, exclusiveGroup)) {
       // If there's already an inclusion rule in the group, we must use an exclusion operator

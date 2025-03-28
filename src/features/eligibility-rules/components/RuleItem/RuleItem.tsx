@@ -6,20 +6,11 @@ import DeleteIcon from '../../../../assets/delete-icon.svg';
 import type RuleItemProps from './types';
 import type { RuleType, RuleValue, Operator, Rule } from '../../types/eligibilityRules.types';
 import './RuleItem.css';
+import { isNumberPair } from '../../utils/typeGuards';
 
 // This file has two components:
 // 1. RuleItem: A component that represents a single rule in the eligibility rules editor.
 // 2. MemoizedRuleItem: A wrapper component that memoizes the RuleItem component.
-
-/**
- * Type guard to check if a value is a number array with exactly 2 elements
- */
-const isNumberPair = (value: unknown): value is [number, number] => {
-  return Array.isArray(value) && 
-         value.length === 2 && 
-         typeof value[0] === 'number' && 
-         typeof value[1] === 'number';
-};
 
 /**
  * A component that represents a single rule in the eligibility rules editor.
@@ -89,7 +80,7 @@ const RuleItem = memo(({
   // Render value input based on rule type and operator
   const renderValueInput = () => {
     if (rule.type === 'product_subscribed' || 
-        (rule.type === 'specific_products' && rule.operator === 'equals_anything')) {
+        (rule.type === 'specific_products' && rule.operator === 'contains_any')) {
       return null;
     }
 
@@ -271,8 +262,6 @@ export const MemoizedRuleItem = memo(({
   rule: Rule;
   index: number;
   handlers: {
-    onRuleChange: (index: number, updatedRule: Rule) => void;
-    onRuleDelete: (index: number) => void;
     onTypeChange: (ruleId: string, newType: RuleType) => void;
     onOperatorChange: (ruleId: string, newOperator: Operator) => void;
     onValueChange: (ruleId: string, newValue: Rule['value']) => void;
@@ -305,8 +294,6 @@ export const MemoizedRuleItem = memo(({
       rule={rule}
       index={index}
       totalRules={totalRules}
-      onRuleChange={handlers.onRuleChange}
-      onRuleDelete={handlers.onRuleDelete}
       ruleTypeOptions={options.ruleTypeOptions}
       operatorOptions={options.operatorOptions}
       availableOperators={availableOperators}

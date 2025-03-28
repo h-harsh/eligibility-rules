@@ -8,10 +8,6 @@ interface RuleItemProps {
   index: number;
   /** Total number of rules */
   totalRules: number;
-  /** Handler for rule changes */
-  onRuleChange: (index: number, updatedRule: Rule) => void;
-  /** Handler for rule deletion */
-  onRuleDelete: (index: number) => void;
   /** Rule type options */
   ruleTypeOptions: Option[];
   /** Operator options */
