@@ -59,12 +59,3 @@ export type AvailableOperatorsConfig = Record<RuleType, Operator[]>;
 
 // Default Values Configuration
 export type DefaultValuesConfig = Record<RuleType, RuleValue>;
-
-// Props for RuleValueInput component
-export interface RuleValueInputProps {
-  rule: Rule;
-  onChange: (value: RuleValue) => void;
-}
-
-// Cart Value Range Type
-export type CartValueRange = [number, number];
